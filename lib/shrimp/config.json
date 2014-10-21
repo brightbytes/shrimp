@@ -3,5 +3,6 @@
     "ignoreSslErrors": false,
     "loadImages": true,
     "outputEncoding": "utf8",
-    "webSecurity": true
+    "webSecurity": true,
+    "sslProtocol": "tlsv1"
 }
