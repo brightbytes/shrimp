@@ -43,6 +43,8 @@ module Shrimp
 
     def run!
       @error  = nil
+      puts 'cmd ==========='
+      puts cmd
       @result = `#{cmd}`
       unless $?.exitstatus == 0
         @error  = @result
