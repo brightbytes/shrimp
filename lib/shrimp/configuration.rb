@@ -1,7 +1,7 @@
 require 'tmpdir'
 module Shrimp
   class Configuration
-    attr_accessor :default_options
+    attr_accessor :default_options, :env_variables
     attr_writer :phantomjs
 
     [:format, :margin, :zoom, :orientation, :tmpdir, :rendering_timeout, :rendering_time, :command_config_file, :viewport_width, :viewport_height].each do |m|
