@@ -133,6 +133,8 @@ module Shrimp
     def dump_cookies
       host = @source.url? ? URI::parse(@source.to_s).host : "/"
       json = @cookies.inject([]) { |a, (k, v)| a.push({ :name => k, :value => v, :domain => host }); a }.to_json
+      puts "[SHRIMP] writing cookies to file #{options[:tmpdir]}/#{rand}.cookies"
+      puts "\n\n--- *** ---\n#{json}\n--- *** ---\n\n"
       File.open("#{options[:tmpdir]}/#{rand}.cookies", 'w') { |f| f.puts json; f }.path
     end
   end
