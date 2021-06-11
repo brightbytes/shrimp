@@ -58,7 +58,13 @@ module Shrimp
       viewport_width, viewport_height   = options[:viewport_width], options[:viewport_height]
       @outfile                          ||= "#{options[:tmpdir]}/#{Digest::MD5.hexdigest((Time.now.to_i + rand(9001)).to_s)}.pdf"
       command_config_file               = "--config=#{options[:command_config_file]}"
-      [Shrimp.configuration.env_variables, Shrimp.configuration.phantomjs, command_config_file, SCRIPT_FILE, "\"#{@source.to_s}\"", @outfile, format, zoom, margin, orientation, cookie_file, rendering_time, timeout, viewport_width, viewport_height ].join(" ")
+      the_command = [Shrimp.configuration.env_variables, Shrimp.configuration.phantomjs, command_config_file, SCRIPT_FILE, "\"#{@source.to_s}\"", @outfile, format, zoom, margin, orientation, cookie_file, rendering_time, timeout, viewport_width, viewport_height ].join(" ")
+
+      puts "\n\n--- *** ---"
+      puts the_command
+      puts "--- *** ---\n\n"
+
+      the_command
     end
 
     # Public: initializes a new Phantom Object
@@ -127,6 +133,8 @@ module Shrimp
     def dump_cookies
       host = @source.url? ? URI::parse(@source.to_s).host : "/"
       json = @cookies.inject([]) { |a, (k, v)| a.push({ :name => k, :value => v, :domain => host }); a }.to_json
+      puts "[SHRIMP] writing cookies to file #{options[:tmpdir]}/#{rand}.cookies"
+      puts "\n\n--- *** ---\n#{json}\n--- *** ---\n\n"
       File.open("#{options[:tmpdir]}/#{rand}.cookies", 'w') { |f| f.puts json; f }.path
     end
   end
